@@ -13,8 +13,8 @@ if __name__ == "__main__":
     slidewindow=Slidewindow(option)
     compare=Compare(option)
 
-    x_3d, y_3d = loader.load_3d()
+    x_3d, _ = loader.load_3d()
     fft_x_3d=fft.fft_3d(x_3d)
-    fft_x_3d, y=slidewindow.window_3d(fft_x_3d)
-    compare.model_compare(x_3d,y_3d)
+    slidewindow_x_3d, slidewindow_y_3d=slidewindow.window_3d(fft_x_3d)
+    compare.model_compare(slidewindow_x_3d,slidewindow_y_3d)
     print(111)

@@ -15,8 +15,9 @@ class Compare():
         self.compare_inplace=option.compare_inplace
 
     def model_compare(self,x,y):
-        splits = get_splits(y, self.compare_valid_size, self.compare_test_size, self.compare_stratify,
-                            self.compare_random_state,self.compare_shuffle,self.compare_show_plots)
+        splits = get_splits(y, valid_size=self.compare_valid_size, test_size=self.compare_test_size,
+                            stratify=self.compare_stratify, random_state=self.compare_random_state,
+                            shuffle=self.compare_shuffle,show_plot=self.compare_show_plots)
         tfms = [None, [Categorize()]]
         batch_tfms = [TSStandardize(), TSNormalize()]
         dsets = TSDatasets(x, y, tfms=tfms, splits=splits, inplace=self.compare_inplace)
