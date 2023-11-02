@@ -1,7 +1,10 @@
+import pickle
+
 import numpy as np
 import pandas as pd
 import torch
 from fastai.learner import load_learner
+from tsai.learner import load_all
 from tsai.utils import toarray
 
 from option import Option
@@ -32,18 +35,21 @@ class Loader:
         return x, y
 
     def load_model(self, model_name):
-        learner = load_learner(model_name)
+        path='models'
+        dls_fname=model_name + '_dls'
+        model_fname=model_name + '_model'
+        learner_fname=model_name + '_learner'
+        learner=load_all(path=path,dls_fname=dls_fname,model_fname=model_fname,learner_fname=learner_fname)
         dls = learner.dls
-        x_probas_train, y_train = learner.get_preds(dl=dls.train, with_decoded=True)
-        x_probas_valid, y_valid = learner.get_preds(dl=dls.valid, with_decoded=True)
+        x_probas_train, y_train,_ = learner.get_preds(dl=dls.train, with_decoded=True)
+        x_probas_valid, y_valid,_ = learner.get_preds(dl=dls.valid, with_decoded=True)
         return x_probas_train, x_probas_valid, y_train, y_valid
 
     def load_for_dbn(self):
         xceptiontime_x_train, xceptiontime_x_valid, xceptiontime_y_train, xceptiontime_y_valid = self.load_model(
-            "./models/xceptiontime_learner.pkl")
+            'xceptiontime')
         ominiscale_x_train, ominiscale_x_valid, onimiscale_y_train, onimiscale_y_valid = self.load_model(
-            "./models/ominiscalecnn_learner.pkl")
-
+            'ominiscalecnn')
         xceptiontime_x_train_array = toarray(xceptiontime_x_train)
         ominiscale_x_train_array = toarray(ominiscale_x_train)
         dbn_x_train = np.zeros(
