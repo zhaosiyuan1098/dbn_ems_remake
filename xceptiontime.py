@@ -4,7 +4,7 @@ from option import Option
 option=Option()
 
 class Xceptiontime:
-    def __int__(self):
+    def __init__(self,Option:option):
         self.xceptiontime_valid_size = option.xceptiontime_valid_size
         self.xceptiontime_test_size = option.xceptiontime_test_size
         self.xceptiontime_stratify = option.xceptiontime_stratify
@@ -21,13 +21,12 @@ class Xceptiontime:
 
         tfms = [None, [Categorize()]]
         x_dsets = TSDatasets(x, y, tfms=tfms, splits=splits, inplace=self.xceptiontime_inplace)
-        bs = 64
         x_dls = TSDataLoaders.from_dsets(x_dsets.train, x_dsets.valid, bs=[self.xceptiontime_bs, self.xceptiontime_bs * 2])
         xceptiontime_model = build_ts_model(XceptionTime, dls=x_dls)
 
         learn = Learner(x_dls, xceptiontime_model, metrics=[accuracy, RocAuc()])
         learn.fit_one_cycle(100, 1e-3)
-        learn.save_all(path='models', dls_fname='x_dls', model_fname='x_model', learner_fname='x_learner')
+        learn.save_all(path='models', dls_fname='xceptiontime_dls', model_fname='xceptiontime_model', learner_fname='xceptiontime_learner')
 
         return xceptiontime_model
 
