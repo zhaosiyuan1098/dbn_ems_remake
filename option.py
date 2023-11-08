@@ -7,6 +7,10 @@ class Option:
         self.num_channel = 6
         self.num_row_perpage = 4165
 
+        # ssa
+        self.ssa_window_length=12
+        self.ssa_save_length=2
+
         # slide window
         self.slidewindow_length = 30
         self.slidewindow_stride = 30
@@ -60,6 +64,7 @@ class Option:
         self.rbm_previous_loss_before_stagnation = 0
         self.rbm_progress = []
         self.rbm_gpu=True
+
 
         #dbn
 

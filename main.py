@@ -1,13 +1,11 @@
-from tsai.imports import computer_setup
-
 from compare import Compare
 from fft import FFT
+from ssa import SSA
 from loader import Loader
 from omniscalecnn import Ominiscalecnn
 from option import Option
 from slidewindow import Slidewindow
 from xceptiontime import Xceptiontime
-from rbm import RBM
 from dbn import DBN
 from dbn import DBN_last_layer
 
@@ -15,10 +13,10 @@ from dbn import DBN_last_layer
 def switch(a='train'):
     # 对象初始化
 
-    computer_setup()
     option = Option()
     loader = Loader(option)
     fft = FFT()
+    ssa=SSA(option)
     slidewindow = Slidewindow(option)
     compare = Compare(option)
     xceptiontime = Xceptiontime(option)
@@ -30,6 +28,7 @@ def switch(a='train'):
     if a == 'train':
         print('train')
         x_3d, _ = loader.load_3d()
+        ssa_x_3d=ssa.ssa_3d(x_3d)
         fft_x_3d = fft.fft_3d(x_3d)
         slidewindow_x_3d, slidewindow_y_3d = slidewindow.window_3d(fft_x_3d)
         xceptiontime_model = xceptiontime.train(slidewindow_x_3d, slidewindow_y_3d)
