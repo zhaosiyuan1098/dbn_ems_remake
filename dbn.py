@@ -55,6 +55,7 @@ class DBN:
             x_dash = x.clone()
         return x_dash
 
+    # 对dbn进行预训练
     def pretrain(self, x):
         for index, layer in enumerate(self.layers):
             if index == 0:

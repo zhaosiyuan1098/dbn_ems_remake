@@ -86,6 +86,7 @@ class RBM:
         self.vb += self.lr * dvb
         self.hb += self.lr * dhb
 
+    # 无监督训练受限玻尔兹曼机
     def train(self, dataset):
         dataset = dataset.to(self.device)
         learning = trange(self.epochs, desc=str('Starting...'))
