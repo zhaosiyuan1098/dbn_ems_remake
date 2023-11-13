@@ -7,9 +7,9 @@
 2. 引入奇异谱分析（Singular Spectrum Analysis，SSA）降噪
 3. 引入快速傅立叶变换（Fast Fourier Transform，FFT）提取原始信号频域信息
 4. 引入[Xception](https://arxiv.org/pdf/1911.03803.pdf)架构，减少网络复杂度，加快训练速度
-![xception](./figure/截屏2023-11-11%20上午11.26.31.png)
+   <img alt="xception" src="./figure/截屏2023-11-11%20上午11.26.31.png"/>
 5. 引入[omni-block](https://arxiv.org/abs/2002.10061),实现对频域信息的高效处理
-![omni-block](./figure/截屏2023-11-11%20上午11.27.56.png)
+![omni-block](./figure/截屏2023-11-12%20下午12.51.58.png)
 6. 使用DBN综合时频域信息，得到最终结果（毕业设计题目限制）
 ---
 原始数据存放在`.\data\`文件夹中；在`option.py`中，可更改各部分参数；在`main.py`中，可自由更改运行模式；最终模型将保存在`./models/`文件夹中
