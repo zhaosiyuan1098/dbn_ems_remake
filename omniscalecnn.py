@@ -25,7 +25,7 @@ class Ominiscalecnn:
         x_dsets = TSDatasets(x, y, tfms=tfms, splits=splits, inplace=self.inplace)
         x_dls = TSDataLoaders.from_dsets(x_dsets.train, x_dsets.valid,
                                          bs=[self.bs, self.bs * 2])
-        ominiscalecnn_model = build_ts_model(XceptionTime, dls=x_dls)
+        ominiscalecnn_model = build_ts_model(OmniScaleCNN, dls=x_dls)
 
         learn = Learner(x_dls, ominiscalecnn_model, metrics=[accuracy, RocAuc()])
         learn.fit_one_cycle(100, 1e-3)
