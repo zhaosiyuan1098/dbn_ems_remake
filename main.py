@@ -20,7 +20,20 @@ def merge_arrays(array1, array2):
     
     return merged_array
 
+def load_data_from_npy(directory="./data"):
+    """
+    Load the EMG data, labels, and repetitions from .npy files.
+    Args:
+        directory (str): Directory where the .npy files are stored.
 
+    Returns:
+        tuple: Tuple containing numpy arrays for emgs, labels, and repetitions.
+    """
+    directory = "./data"
+    emgs_flattened = np.load(f"{directory}/emgs_flattened.npy")
+    labels_flattened = np.load(f"{directory}/labels_flattened.npy")
+    repetitions_flattened = np.load(f"{directory}/repetitions_flattened.npy")
+    return emgs_flattened, labels_flattened, repetitions_flattened
 
 def switch(a='train'):
     # 对象初始化
@@ -43,6 +56,14 @@ def switch(a='train'):
         slidewindow_x_3d, slidewindow_y_3d = slidewindow.window_3d(x_3d)
         compare.model_compare(slidewindow_x_3d, slidewindow_y_3d)
 
+    if a=='ninapro':
+        print("ninapro")
+        emgs_flattened, labels_flattened, repetitions_flattened = load_data_from_npy()
+        print(emgs_flattened.shape)
+        print(labels_flattened.shape)
+        print(repetitions_flattened.shape)
+        compare.model_compare(emgs_flattened, labels_flattened)
+
     # 训练两个模型
     if a == 'train':
         print('train')
@@ -56,7 +77,7 @@ def switch(a='train'):
 
         # xceptiontime_model = xceptiontime.train(time_ssa_x, time_y)
         
-        ominiscalecnn_model = ominiscalecnn.train(freq_x, time_y)
+        # ominiscalecnn_model = ominiscalecnn.train(freq_x, time_y)
         
         
         
@@ -89,5 +110,5 @@ def switch(a='train'):
 
 
 if __name__ == "__main__":
-    switch('train')
+    switch('ninapro')
 
