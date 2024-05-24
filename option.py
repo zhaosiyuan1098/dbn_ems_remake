@@ -1,5 +1,9 @@
 class Option:
     def __init__(self):
+
+        self.wandb = True
+        self.wandb_username = 'siyuan1098'
+
         # load
         self.folder_path = "./data"
         self.num_person = 4
@@ -39,14 +43,14 @@ class Option:
 
         # ominiscalecnn
 
-        self.ominiscalecnn_valid_size = 0.2
-        self.ominiscalecnn_test_size = 0.1
-        self.ominiscalecnn_stratify = True
-        self.ominiscalecnn_random_state = 23
-        self.ominiscalecnn_shuffle = True
-        self.ominiscalecnn_show_plots = False
-        self.ominiscalecnn_bs = 64
-        self.ominiscalecnn_inplace = True
+        self.omniscalecnn_valid_size = 0.2
+        self.omniscalecnn_test_size = 0.1
+        self.omniscalecnn_stratify = True
+        self.omniscalecnn_random_state = 23
+        self.omniscalecnn_shuffle = True
+        self.omniscalecnn_show_plots = False
+        self.omniscalecnn_bs = 64
+        self.omniscalecnn_inplace = True
 
         # rbm
         self.rbm_mode = 'bernoulli'  # bernoulli or gaussian RBM

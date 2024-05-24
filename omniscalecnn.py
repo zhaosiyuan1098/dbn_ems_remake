@@ -1,35 +1,48 @@
 from tsai.all import *
+from fastai.learner import Learner
+from fastai.callback.wandb import WandbCallback
+import wandb
 
 from option import Option
 
-option = Option()
+option=Option()
 
-
-class Ominiscalecnn:
-    def __init__(self, Option: option):
-        self.valid_size = option.ominiscalecnn_valid_size
-        self.test_size = option.ominiscalecnn_test_size
-        self.stratify = option.ominiscalecnn_stratify
-        self.random_state = option.ominiscalecnn_random_state
-        self.shuffle = option.ominiscalecnn_shuffle
-        self.show_plots = option.ominiscalecnn_show_plots
-        self.bs = option.ominiscalecnn_bs
-        self.inplace = option.ominiscalecnn_inplace
+class Omniscalecnn:
+    def __init__(self, option: Option):
+        self.valid_size = option.omniscalecnn_valid_size
+        self.test_size = option.omniscalecnn_test_size
+        self.stratify = option.omniscalecnn_stratify
+        self.random_state = option.omniscalecnn_random_state
+        self.shuffle = option.omniscalecnn_shuffle
+        self.show_plots = option.omniscalecnn_show_plots
+        self.bs = option.omniscalecnn_bs
+        self.inplace = option.omniscalecnn_inplace
+        self.wandb = option.wandb
+        self.wandb_username = option.wandb_username
 
     def train(self, x, y):
+        if self.wandb:
+            wandb.init(project='zhao_omni', entity=self.wandb_username, config={
+                "valid_size": self.valid_size,
+                "test_size": self.test_size,
+                "batch_size": self.bs,
+            })
+
         splits = get_splits(y, valid_size=self.valid_size, test_size=self.test_size,
                             stratify=self.stratify, random_state=self.random_state,
                             shuffle=self.shuffle, show_plot=self.show_plots)
-
         tfms = [None, [Categorize()]]
-        x_dsets = TSDatasets(x, y, tfms=tfms, splits=splits, inplace=self.inplace)
-        x_dls = TSDataLoaders.from_dsets(x_dsets.train, x_dsets.valid,
-                                         bs=[self.bs, self.bs * 2])
-        ominiscalecnn_model = build_ts_model(OmniScaleCNN, dls=x_dls)
+        dsets = TSDatasets(x, y, tfms=tfms, splits=splits, inplace=self.inplace)
+        dls = TSDataLoaders.from_dsets(dsets.train, dsets.valid, bs=[self.bs, self.bs * 2])
 
-        learn = Learner(x_dls, ominiscalecnn_model, metrics=[accuracy, RocAuc()])
+        model = build_ts_model(OmniScaleCNN, dls=dls)
+        callbacks = [WandbCallback()] if self.wandb else []
+        learn = Learner(dls, model, metrics=[accuracy, RocAuc()], cbs=callbacks)
         learn.fit_one_cycle(100, 1e-3)
-        learn.save_all(path='models', dls_fname='ominiscalecnn_dls', model_fname='ominiscalecnn_model',
-                       learner_fname='ominiscalecnn_learner')
+        learn.save_all(path='models', dls_fname='omniscalecnn_dls', model_fname='omniscalecnn_model',
+                       learner_fname='omniscalecnn_learner')
 
-        return ominiscalecnn_model
+        if self.wandb:
+            wandb.finish()
+
+        return model

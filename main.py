@@ -2,7 +2,7 @@ from compare import Compare
 from fft import FFT
 from ssa import SSA
 from loader import Loader
-from omniscalecnn import Ominiscalecnn
+from omniscalecnn import Omniscalecnn
 from option import Option
 from slidewindow import Slidewindow
 from xceptiontime import Xceptiontime
@@ -45,7 +45,7 @@ def switch(a='train'):
     slidewindow = Slidewindow(option)
     compare = Compare(option)
     xceptiontime = Xceptiontime(option)
-    ominiscalecnn = Ominiscalecnn(option)
+    ominiscalecnn = Omniscalecnn(option)
     dbn = DBN(option)
     dbn_last_layer = DBN_last_layer(option)
 
@@ -62,7 +62,13 @@ def switch(a='train'):
         print(emgs_flattened.shape)
         print(labels_flattened.shape)
         print(repetitions_flattened.shape)
-        compare.model_compare(emgs_flattened, labels_flattened)
+        # compare.model_compare(emgs_flattened, labels_flattened)
+        freq_x=fft.fft_transform_multidimensional(emgs_flattened)
+        ssa_x=ssa.ssa_3d(emgs_flattened)
+        time_ssa_x=merge_arrays(emgs_flattened,ssa_x)
+        xceptiontime_model = xceptiontime.train(time_ssa_x, labels_flattened)
+        
+        ominiscalecnn_model = ominiscalecnn.train(freq_x, labels_flattened)
 
     # 训练两个模型
     if a == 'train':
@@ -72,12 +78,12 @@ def switch(a='train'):
         freq_x=fft.fft_transform_multidimensional(time_x)
         ssa_x=ssa.ssa_3d(time_x)
         time_ssa_x=merge_arrays(time_x,ssa_x)
-        compare.model_compare(time_ssa_x, time_y)
-        compare.model_compare(freq_x, time_y)
+        # compare.model_compare(time_ssa_x, time_y)
+        # compare.model_compare(freq_x, time_y)
 
-        # xceptiontime_model = xceptiontime.train(time_ssa_x, time_y)
+        xceptiontime_model = xceptiontime.train(time_ssa_x, time_y)
         
-        # ominiscalecnn_model = ominiscalecnn.train(freq_x, time_y)
+        ominiscalecnn_model = ominiscalecnn.train(freq_x, time_y)
         
         
         
@@ -110,5 +116,5 @@ def switch(a='train'):
 
 
 if __name__ == "__main__":
-    switch('ninapro')
+    switch('train')
 
