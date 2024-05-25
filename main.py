@@ -1,6 +1,4 @@
 import numpy as np
-
-import slidewindow
 from compare import Compare
 from dbn import DBN
 from dbn import DBN_last_layer
@@ -57,9 +55,11 @@ def switch(a='train'):
     # 比较各模型
     if a == 'compare':
         print('compare')
-        x_3d, _ = loader.load_3d()
-        slidewindow_x_3d, slidewindow_y_3d = slidewindow.window_3d(x_3d)
-        compare.model_compare(slidewindow_x_3d, slidewindow_y_3d)
+
+        x_train, x_test, y_train, y_test = prepro.load_ang_split()
+        x_train_flattern, x_test_flattern, y_train_flattern, y_test_flattern = prepro.flattern(x_train, y_train, x_test,
+                                                                                               y_test)
+        compare.model_compare(x_train_flattern, y_train_flattern)
 
     if a == 'ninapro':
         print("ninapro")
@@ -106,4 +106,4 @@ def switch(a='train'):
 
 
 if __name__ == "__main__":
-    switch('train')
+    switch('compare')
