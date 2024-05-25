@@ -36,9 +36,9 @@ class Option:
         self.xceptiontime_test_size = 0.1
         self.xceptiontime_stratify = True
         self.xceptiontime_random_state = 23
-        self.xceptiontime_shuffle = False
+        self.xceptiontime_shuffle = True
         self.xceptiontime_show_plots = True
-        self.xceptiontime_bs = 64
+        self.xceptiontime_bs = 256
         self.xceptiontime_inplace = True
 
         # ominiscalecnn

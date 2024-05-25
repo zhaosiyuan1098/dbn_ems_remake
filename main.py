@@ -11,6 +11,13 @@ from dbn import DBN_last_layer
 from preprocessor import Preprocessor
 import numpy as np
 
+
+
+
+
+
+
+
 def merge_arrays(array1, array2):
     # 检查输入数组的形状是否符合要求
     if array1.shape[0] != array2.shape[0] or array1.shape[2] != array2.shape[2]:
@@ -75,15 +82,19 @@ def switch(a='train'):
     # 训练两个模型
     if a == 'train':
         print('train')
+        # 新写了一个preprocess类，用于处理数据
         x_train, x_test, y_train, y_test=prepro.load_ang_split()
         x_train_flattern, x_test_flattern,y_train_flattern,y_test_flattern=prepro.flattern(x_train, y_train,x_test, y_test)
+
+
+        #下面的六行可以合并到一起
         freq_x_train=fft.fft_transform_multidimensional(x_train_flattern)
         ssa_x_train=ssa.ssa_3d(x_train_flattern)
         time_ssa_x_train=merge_arrays(x_train_flattern,ssa_x_train)
         freq_x_test=fft.fft_transform_multidimensional(x_test_flattern)
         ssa_x_test=ssa.ssa_3d(x_test_flattern)
         time_ssa_x_test=merge_arrays(x_test_flattern,ssa_x_test)
-        xceptiontime_model = xceptiontime.train(time_ssa_x_train, y_train_flattern)
+        xceptiontime_model = xceptiontime.train(time_ssa_x_train, y_train_flattern,time_ssa_x_test, y_test_flattern)
 
         
         

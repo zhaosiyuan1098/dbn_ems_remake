@@ -9,6 +9,7 @@ class Preprocessor():
         self.num_row_perpage=4165
         self.folder_path = './data'
     def load(self):
+        #返回的格式x=（受试者人数，总帧数，通道数），y=（受试者人数，总帧数）
         num_samples = self.num_person
         num_features = self.num_row_perpage * self.num_gesture
         num_steps = self.num_channel
@@ -22,6 +23,7 @@ class Preprocessor():
                 y[i-1, (j-1)*self.num_row_perpage:(j*self.num_row_perpage)] = int(x_index)%12  # Change the way y is filled
         return x, y
     def sliding_window(self,data, window_length, step):
+        #返回的格式为（样本数，受试者人数，通道数，窗口长度）
         """
         Apply sliding window to the data.
         Args:
@@ -70,6 +72,8 @@ class Preprocessor():
         return emgs_windows, labels_windows
     
     def split_data(self, emgs_windows, labels_windows, num_actions=12, split_ratio=0.8):
+        #把数据分成训练集和测试集
+        #这里的split和xception等网络训练中的get——split不一样，这里是把数据分成x和test，而get_split是把x分成train和valid(训练过程中的accuracy就是valid的)
         """
         Split the data into training and test sets.
 
@@ -107,6 +111,7 @@ class Preprocessor():
         return emgs_train, emgs_test, labels_train, labels_test
     
     def flatten_windows(self,emgs_windows, labels_windows,window_length=60):
+        #把数据调整成和之前对应的形状
         """
         Flatten the first two dimensions of the windowed data arrays.
         Args:
