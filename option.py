@@ -1,7 +1,7 @@
 class Option:
     def __init__(self):
 
-        self.wandb = True
+        self.wandb = False
         self.wandb_username = 'siyuan1098'
 
         # load
@@ -13,10 +13,10 @@ class Option:
 
         # ssa
         self.ssa_window_length=12
-        self.ssa_save_length=2
+        self.ssa_save_length=1
 
         # slide window
-        self.slidewindow_length = 30
+        self.slidewindow_length = 60
         self.slidewindow_stride = 30
 
         # compare
@@ -36,8 +36,8 @@ class Option:
         self.xceptiontime_test_size = 0.1
         self.xceptiontime_stratify = True
         self.xceptiontime_random_state = 23
-        self.xceptiontime_shuffle = True
-        self.xceptiontime_show_plots = False
+        self.xceptiontime_shuffle = False
+        self.xceptiontime_show_plots = True
         self.xceptiontime_bs = 64
         self.xceptiontime_inplace = True
 

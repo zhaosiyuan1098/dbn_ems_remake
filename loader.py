@@ -33,6 +33,20 @@ class Loader:
                 x[x_index, :, :] = dftemp.T
                 y[x_index] = int(x_index + 1)
         return x, y
+    
+    def load(self):
+        num_samples = self.num_person
+        num_features = self.num_row_perpage * self.num_gesture
+        num_steps = self.num_channel
+        x = np.zeros((num_samples, num_features, num_steps))
+        y = np.zeros((self.num_person, self.num_row_perpage * self.num_gesture))  # Change the shape of y
+        for i in range(1, self.num_person + 1):
+            for j in range(1, self.num_gesture + 1):
+                dftemp = pd.read_excel(self.folder_path + '/{}{}.xls'.format(i, j))
+                x_index = (i - 1) * self.num_gesture + j - 1
+                x[i-1, (j-1)*self.num_row_perpage:(j*self.num_row_perpage), :] = dftemp
+                y[i-1, (j-1)*self.num_row_perpage:(j*self.num_row_perpage)] = int(x_index)%12  # Change the way y is filled
+        return x, y
 
     def load_model(self, model_name):
         path='models'

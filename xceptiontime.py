@@ -21,7 +21,7 @@ class Xceptiontime:
         if self.wandb:
             import wandb
             from fastai.callback.wandb import WandbCallback
-            wandb.init(project='zhao_xcep', entity=self.wandb_username, config={
+            wandb.init(project='nina_xcep', entity=self.wandb_username, config={
                 "valid_size": self.valid_size,
                 "test_size": self.test_size,
                 "batch_size": self.bs,
@@ -39,9 +39,26 @@ class Xceptiontime:
         callbacks = [WandbCallback()] if self.wandb else []
         learn = Learner(x_dls, xceptiontime_model, metrics=[accuracy, RocAuc()], cbs=callbacks)
         learn.fit_one_cycle(100, 1e-3)
-        learn.save_all(path='models', dls_fname='xceptiontime_dls', model_fname='xceptiontime_model', learner_fname='xceptiontime_learner')
+        # learn.save_all(path='models', model_fname='xceptiontime_model', learner_fname='xceptiontime_learner')
 
         if self.wandb:
             wandb.finish()
 
         return xceptiontime_model
+    
+    def evaluate(self, model, x_test, y_test):
+        # Create a TSDataset for the test set
+        test_dset = TSDatasets(x_test, y_test, tfms=[None, [Categorize()]], splits=None)
+
+        # Create a DataLoader for the test set
+        test_dl = TSDataLoader(test_dset, bs=self.bs)
+
+        # Create a Learner for the test set
+        learn = Learner(test_dl, model, metrics=[accuracy, RocAuc()])
+
+        # Validate the model on the test set
+        test_loss, test_accuracy = learn.validate(dl=test_dl)
+        print(f"Test loss: {test_loss}")
+        print(f"Test accuracy: {test_accuracy}")
+
+        return test_loss, test_accuracy

@@ -39,7 +39,7 @@ class Omniscalecnn:
         callbacks = [WandbCallback()] if self.wandb else []
         learn = Learner(dls, model, metrics=[accuracy, RocAuc()], cbs=callbacks)
         learn.fit_one_cycle(100, 1e-3)
-        learn.save_all(path='models', dls_fname='omniscalecnn_dls', model_fname='omniscalecnn_model',
+        learn.save_all(path='models', model_fname='omniscalecnn_model',
                        learner_fname='omniscalecnn_learner')
 
         if self.wandb:

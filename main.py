@@ -8,6 +8,7 @@ from slidewindow import Slidewindow
 from xceptiontime import Xceptiontime
 from dbn import DBN
 from dbn import DBN_last_layer
+from preprocessor import Preprocessor
 import numpy as np
 
 def merge_arrays(array1, array2):
@@ -48,6 +49,7 @@ def switch(a='train'):
     ominiscalecnn = Omniscalecnn(option)
     dbn = DBN(option)
     dbn_last_layer = DBN_last_layer(option)
+    prepro=Preprocessor()
 
     # 比较各模型
     if a == 'compare':
@@ -66,24 +68,23 @@ def switch(a='train'):
         freq_x=fft.fft_transform_multidimensional(emgs_flattened)
         ssa_x=ssa.ssa_3d(emgs_flattened)
         time_ssa_x=merge_arrays(emgs_flattened,ssa_x)
-        xceptiontime_model = xceptiontime.train(time_ssa_x, labels_flattened)
+        xceptiontime_model = xceptiontime.train(emgs_flattened, labels_flattened)
         
-        ominiscalecnn_model = ominiscalecnn.train(freq_x, labels_flattened)
+        # ominiscalecnn_model = ominiscalecnn.train(freq_x, labels_flattened)
 
     # 训练两个模型
     if a == 'train':
         print('train')
-        x_3d, _ = loader.load_3d()
-        time_x,time_y=slidewindow.window_3d(x_3d)
-        freq_x=fft.fft_transform_multidimensional(time_x)
-        ssa_x=ssa.ssa_3d(time_x)
-        time_ssa_x=merge_arrays(time_x,ssa_x)
-        # compare.model_compare(time_ssa_x, time_y)
-        # compare.model_compare(freq_x, time_y)
+        x_train, x_test, y_train, y_test=prepro.load_ang_split()
+        x_train_flattern, x_test_flattern,y_train_flattern,y_test_flattern=prepro.flattern(x_train, y_train,x_test, y_test)
+        freq_x_train=fft.fft_transform_multidimensional(x_train_flattern)
+        ssa_x_train=ssa.ssa_3d(x_train_flattern)
+        time_ssa_x_train=merge_arrays(x_train_flattern,ssa_x_train)
+        freq_x_test=fft.fft_transform_multidimensional(x_test_flattern)
+        ssa_x_test=ssa.ssa_3d(x_test_flattern)
+        time_ssa_x_test=merge_arrays(x_test_flattern,ssa_x_test)
+        xceptiontime_model = xceptiontime.train(time_ssa_x_train, y_train_flattern)
 
-        xceptiontime_model = xceptiontime.train(time_ssa_x, time_y)
-        
-        ominiscalecnn_model = ominiscalecnn.train(freq_x, time_y)
         
         
         
