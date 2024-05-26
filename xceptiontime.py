@@ -25,8 +25,8 @@ class Xceptiontime:
                 "valid_size": self.valid_size,
                 "batch_size": self.bs,
             })
-# 这里会出现一张图，显示数据集的分布，但这里的test并不是test，而是valid
-        splits = get_splits(y_train, valid_size=self.valid_size, stratify=self.stratify, 
+        # 这里会出现一张图，显示数据集的分布，但这里的test并不是test，而是valid
+        splits = get_splits(y_train, valid_size=self.valid_size, stratify=self.stratify,
                             random_state=self.random_state, shuffle=self.shuffle, show_plot=self.show_plots)
 
         tfms = [None, [Categorize()]]
@@ -45,7 +45,7 @@ class Xceptiontime:
         # Validate the model on the test set
         #这里的test_dl是在preprocess里手工分出来的，所以这里的test是真正的test
         metrics = learn.validate(dl=test_dl)
-        test_loss, test_accuracy, test_roc_auc = metrics[0], metrics[1], metrics[2] 
+        test_loss, test_accuracy, test_roc_auc = metrics[0], metrics[1], metrics[2]
         print(f"Test loss: {test_loss}")
         print(f"Test accuracy: {test_accuracy}")
 
@@ -53,20 +53,3 @@ class Xceptiontime:
             wandb.finish()
 
         return xceptiontime_model
-    
-    def evaluate(self, model, x_test, y_test):
-        # Create a TSDataset for the test set
-        test_dset = TSDatasets(x_test, y_test, tfms=[None, [Categorize()]], splits=None)
-
-        # Create a DataLoader for the test set
-        test_dl = TSDataLoader(test_dset, bs=self.bs)
-
-        # Create a Learner for the test set
-        learn = Learner(test_dl, model, metrics=[accuracy, RocAuc()])
-
-        # Validate the model on the test set
-        test_loss, test_accuracy = learn.validate(dl=test_dl)
-        print(f"Test loss: {test_loss}")
-        print(f"Test accuracy: {test_accuracy}")
-
-        return test_loss, test_accuracy
