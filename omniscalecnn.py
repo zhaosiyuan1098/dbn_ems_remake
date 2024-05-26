@@ -2,7 +2,7 @@ from tsai.all import *
 from fastai.learner import Learner
 from fastai.callback.wandb import WandbCallback
 import wandb
-
+import pickle
 from option import Option
 
 option=Option()
@@ -55,5 +55,14 @@ class Omniscalecnn:
 
         if self.wandb:
             wandb.finish()
+
+        learn.save_all(path='models', dls_fname='ominiscalecnn_dls', model_fname='ominiscalecnn_model',
+                       learner_fname='ominiscalecnn_learner')
+
+        # 添加保存test_dl
+        def save_test_dl(test_dl, path, fname):
+            with open(f"{path}/{fname}", 'wb') as f:
+                pickle.dump(test_dl, f)
+        save_test_dl(test_dl, 'models', 'ominiscalecnn_test_dl.pkl')
 
         return xceptiontime_model

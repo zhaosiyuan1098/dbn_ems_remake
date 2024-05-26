@@ -1,6 +1,6 @@
 from tsai.all import *
 from option import Option
-
+import pickle
 # Assuming Option class is defined elsewhere and imported correctly
 option = Option()
 
@@ -51,5 +51,13 @@ class Xceptiontime:
 
         if self.wandb:
             wandb.finish()
+
+        learn.save_all(path='models', dls_fname='xceptiontime_dls', model_fname='xceptiontime_model', learner_fname='xceptiontime_learner')
+
+        # 添加保存test_dl
+        def save_test_dl(test_dl, path, fname):
+            with open(f"{path}/{fname}", 'wb') as f:
+                pickle.dump(test_dl, f)
+        save_test_dl(test_dl, 'models', 'xceptiontime_test_dl.pkl')
 
         return xceptiontime_model
