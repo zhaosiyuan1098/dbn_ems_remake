@@ -57,20 +57,3 @@ class Omniscalecnn:
             wandb.finish()
 
         return xceptiontime_model
-
-    def evaluate(self, model, x_test, y_test):
-        # Create a TSDataset for the test set
-        test_dset = TSDatasets(x_test, y_test, tfms=[None, [Categorize()]], splits=None)
-
-        # Create a DataLoader for the test set
-        test_dl = TSDataLoader(test_dset, bs=self.bs)
-
-        # Create a Learner for the test set
-        learn = Learner(test_dl, model, metrics=[accuracy, RocAuc()])
-
-        # Validate the model on the test set
-        test_loss, test_accuracy = learn.validate(dl=test_dl)
-        print(f"Test loss: {test_loss}")
-        print(f"Test accuracy: {test_accuracy}")
-
-        return test_loss, test_accuracy

@@ -92,9 +92,9 @@ def switch(a='train'):
 
         freq_x_train = fft.fft_transform_multidimensional(x_train_flattern)
         freq_x_test = fft.fft_transform_multidimensional(x_test_flattern)
-        time_fft_x_train = merge_arrays(x_train_flattern, freq_x_train)
-        time_fft_x_test = merge_arrays(x_test_flattern, freq_x_test)
-        ominiscalecnn_model = ominiscalecnn.train(time_fft_x_train, y_train_flattern, time_fft_x_test, y_test_flattern)
+        # time_fft_x_train = merge_arrays(x_train_flattern, freq_x_train)
+        # time_fft_x_test = merge_arrays(x_test_flattern, freq_x_test)
+        ominiscalecnn_model = ominiscalecnn.train(freq_x_train, y_train_flattern, freq_x_test, y_test_flattern)
 
     # 加载xception和ominiscale结果，供后续dbn训练
     if a == 'load':
@@ -106,4 +106,4 @@ def switch(a='train'):
 
 
 if __name__ == "__main__":
-    switch('compare')
+    switch('train')
