@@ -120,4 +120,4 @@ def switch(a='train'):
         Linear.linear()
 
 if __name__ == "__main__":
-    switch('train')
+    switch('attention')

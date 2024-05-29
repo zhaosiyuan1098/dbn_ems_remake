@@ -55,10 +55,10 @@ class Loader:
         learner_fname=model_name + '_learner'
         learner=load_all(path=path,dls_fname=dls_fname,model_fname=model_fname,learner_fname=learner_fname)
         dls = learner.dls
-        x_probas_train, y_train,_ = learner.get_preds(dl=dls.train, with_decoded=True)
+        x_train, y_train,_ = learner.get_preds(dl=dls.train, with_decoded=True)
 
-        # x_probas_valid, y_valid,_ = learner.get_preds(dl=dls.valid, with_decoded=True)  #这里是原来的的读取
-        # return x_probas_train, x_probas_valid, y_train, y_valid
+        # x_valid, y_valid,_ = learner.get_preds(dl=dls.valid, with_decoded=True)  #这里是原来的的读取
+        # return x_train, x_valid, y_train, y_valid
 
         def load_test_dl(path, fname):      # 这里是读取模型train函数中的test_dls
             with open(f"{path}/{fname}", 'rb') as f:
@@ -66,9 +66,9 @@ class Loader:
             return test_dl
         # 使用这个函数加载test_dl：
         test_dl = load_test_dl(path, model_name+'_test_dl.pkl')
-        x_probas_valid, y_valid,_ = learner.get_preds(dl=test_dl, with_decoded=True)
+        x_test, y_test,_ = learner.get_preds(dl=test_dl, with_decoded=True)
 
-        return x_probas_train, x_probas_valid, y_train, y_valid
+        return x_train, x_test, y_train, y_test
         # 如果想改回原来的读取只需要注释掉新的，原来的取消注释即可
 
     def load_for_dbn(self):
