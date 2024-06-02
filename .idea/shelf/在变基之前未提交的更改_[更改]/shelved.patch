@@ -1,0 +1,130 @@
+Index: .idea/encodings.xml
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+deleted file mode 100644
+--- a/.idea/encodings.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Encoding">
+-    <file url="file://$PROJECT_DIR$/attention" charset="GBK" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+deleted file mode 100644
+--- a/.idea/inspectionProfiles/profiles_settings.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,6 +0,0 @@
+-<component name="InspectionProjectProfileManager">
+-  <settings>
+-    <option name="USE_PROJECT_PROFILE" value="false" />
+-    <version value="1.0" />
+-  </settings>
+-</component>
+\ No newline at end of file
+Index: .idea/modules.xml
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/dbn_ems_remake.iml" filepath="$PROJECT_DIR$/.idea/dbn_ems_remake.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+deleted file mode 100644
+--- a/.idea/misc.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Black">
+-    <option name="sdkName" value="Python 3.9" />
+-  </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="dbn" project-jdk-type="Python SDK" />
+-</project>
+\ No newline at end of file
+Index: .idea/dbn_ems_remake.iml
+===================================================================
+diff --git a/.idea/dbn_ems_remake.iml b/.idea/dbn_ems_remake.iml
+deleted file mode 100644
+--- a/.idea/dbn_ems_remake.iml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="PYTHON_MODULE" version="4">
+-  <component name="NewModuleRootManager">
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="jdk" jdkName="dbn" jdkType="Python SDK" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,8 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/inspectionProfiles/Project_Default.xml
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+deleted file mode 100644
+--- a/.idea/inspectionProfiles/Project_Default.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,16 +0,0 @@
+-<component name="InspectionProjectProfileManager">
+-  <profile version="1.0">
+-    <option name="myName" value="Project Default" />
+-    <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
+-      <option name="ourVersions">
+-        <value>
+-          <list size="3">
+-            <item index="0" class="java.lang.String" itemvalue="2.7" />
+-            <item index="1" class="java.lang.String" itemvalue="3.12" />
+-            <item index="2" class="java.lang.String" itemvalue="3.5" />
+-          </list>
+-        </value>
+-      </option>
+-    </inspection_tool>
+-  </profile>
+-</component>
+\ No newline at end of file
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
++++ /dev/null	(revision eca995c0ce4416b0e9f399562b8c90c1e7264b55)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+diff --git a/attention/__init__.py b/attention/__init__.py
+deleted file mode 100644

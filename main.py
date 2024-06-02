@@ -10,6 +10,9 @@ from preprocessor import Preprocessor
 from ssa import SSA
 from xceptiontime import Xceptiontime
 
+import Attention
+import Linear
+
 
 def merge_arrays(array1, array2):
     # 检查输入数组的形状是否符合要求
@@ -104,6 +107,17 @@ def switch(a='train'):
     if a == 'plot':
         print('plot')
 
+    if a == 'dbn':
+        x_train, x_valid, y_train, y_valid = loader.load_for_dbn()
+        dbn_input_size = x_train
+        dbn.pretrain(dbn_input_size)
+        dbn_last_layer.train(x_train, y_train, x_train, x_valid, y_train, y_valid)
+
+    if a=='attention':
+        Attention.attention()
+
+    if a=='linear':
+        Linear.linear()
 
 if __name__ == "__main__":
-    switch('train')
+    switch('attention')
